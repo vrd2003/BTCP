@@ -1,0 +1,668 @@
+[
+  {
+    "inputs": [],
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+  },
+  {
+    "inputs": [],
+    "name": "DelayNotEligible",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "EnforcedPause",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "ExpectedPause",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "InsufficientPoolBalance",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "InvalidOracleEvidence",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "InvalidPolicyTerms",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "owner",
+        "type": "address"
+      }
+    ],
+    "name": "OwnableInvalidOwner",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      }
+    ],
+    "name": "OwnableUnauthorizedAccount",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "PolicyUnavailable",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "ReentrancyGuardReentrantCall",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "TransferFailed",
+    "type": "error"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "bytes32",
+        "name": "flightKey",
+        "type": "bytes32"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint32",
+        "name": "delayMinutes",
+        "type": "uint32"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint8",
+        "name": "agreeingSources",
+        "type": "uint8"
+      },
+      {
+        "indexed": false,
+        "internalType": "bytes32",
+        "name": "evidenceHash",
+        "type": "bytes32"
+      }
+    ],
+    "name": "ArrivalVerified",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "policyId",
+        "type": "uint256"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "passenger",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "amountWei",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint32",
+        "name": "delayMinutes",
+        "type": "uint32"
+      }
+    ],
+    "name": "CompensationPaid",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "oracle",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "bool",
+        "name": "authorized",
+        "type": "bool"
+      }
+    ],
+    "name": "OracleAuthorizationChanged",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "previousOwner",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "newOwner",
+        "type": "address"
+      }
+    ],
+    "name": "OwnershipTransferred",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      }
+    ],
+    "name": "Paused",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "policyId",
+        "type": "uint256"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "passenger",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "bytes32",
+        "name": "flightKey",
+        "type": "bytes32"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "premiumWei",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint64",
+        "name": "scheduledArrival",
+        "type": "uint64"
+      },
+      {
+        "indexed": false,
+        "internalType": "bytes32",
+        "name": "termsHash",
+        "type": "bytes32"
+      }
+    ],
+    "name": "PolicyPurchased",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "policyId",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint32",
+        "name": "delayMinutes",
+        "type": "uint32"
+      }
+    ],
+    "name": "PolicySettled",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "funder",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "amountWei",
+        "type": "uint256"
+      }
+    ],
+    "name": "PoolFunded",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      }
+    ],
+    "name": "Unpaused",
+    "type": "event"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes32",
+        "name": "",
+        "type": "bytes32"
+      }
+    ],
+    "name": "activePoliciesByFlight",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "name": "authorizedOracles",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "fundPool",
+    "outputs": [],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "policyId",
+        "type": "uint256"
+      }
+    ],
+    "name": "getPolicy",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "passenger",
+        "type": "address"
+      },
+      {
+        "internalType": "bytes32",
+        "name": "flightKey",
+        "type": "bytes32"
+      },
+      {
+        "internalType": "uint64",
+        "name": "scheduledArrival",
+        "type": "uint64"
+      },
+      {
+        "internalType": "uint64",
+        "name": "coverageStartsAt",
+        "type": "uint64"
+      },
+      {
+        "internalType": "uint64",
+        "name": "coverageEndsAt",
+        "type": "uint64"
+      },
+      {
+        "internalType": "uint32",
+        "name": "coverageThresholdMinutes",
+        "type": "uint32"
+      },
+      {
+        "internalType": "uint128",
+        "name": "maximumPayoutWei",
+        "type": "uint128"
+      },
+      {
+        "internalType": "uint128",
+        "name": "premiumWei",
+        "type": "uint128"
+      },
+      {
+        "internalType": "bool",
+        "name": "paid",
+        "type": "bool"
+      },
+      {
+        "internalType": "bool",
+        "name": "settled",
+        "type": "bool"
+      },
+      {
+        "components": [
+          {
+            "internalType": "uint32",
+            "name": "minimumDelayMinutes",
+            "type": "uint32"
+          },
+          {
+            "internalType": "uint128",
+            "name": "amountWei",
+            "type": "uint128"
+          }
+        ],
+        "internalType": "struct FlightSure.Tier[]",
+        "name": "tiers",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "nextPolicyId",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "owner",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "pause",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "paused",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "policyId",
+        "type": "uint256"
+      }
+    ],
+    "name": "payCompensation",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "poolBalance",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes32",
+        "name": "flightKey",
+        "type": "bytes32"
+      },
+      {
+        "internalType": "uint64",
+        "name": "scheduledArrival",
+        "type": "uint64"
+      },
+      {
+        "internalType": "uint64",
+        "name": "coverageStartsAt",
+        "type": "uint64"
+      },
+      {
+        "internalType": "uint64",
+        "name": "coverageEndsAt",
+        "type": "uint64"
+      },
+      {
+        "internalType": "uint32",
+        "name": "coverageThresholdMinutes",
+        "type": "uint32"
+      },
+      {
+        "internalType": "uint128",
+        "name": "maximumPayoutWei",
+        "type": "uint128"
+      },
+      {
+        "internalType": "uint32[]",
+        "name": "tierDelayMinutes",
+        "type": "uint32[]"
+      },
+      {
+        "internalType": "uint128[]",
+        "name": "tierAmountsWei",
+        "type": "uint128[]"
+      }
+    ],
+    "name": "purchasePolicy",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "policyId",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "renounceOwnership",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "oracle",
+        "type": "address"
+      },
+      {
+        "internalType": "bool",
+        "name": "authorized",
+        "type": "bool"
+      }
+    ],
+    "name": "setOracle",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "policyId",
+        "type": "uint256"
+      }
+    ],
+    "name": "settleIneligiblePolicy",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "newOwner",
+        "type": "address"
+      }
+    ],
+    "name": "transferOwnership",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "unpause",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes32",
+        "name": "",
+        "type": "bytes32"
+      }
+    ],
+    "name": "verifiedArrivals",
+    "outputs": [
+      {
+        "internalType": "uint64",
+        "name": "scheduledArrival",
+        "type": "uint64"
+      },
+      {
+        "internalType": "uint64",
+        "name": "actualArrival",
+        "type": "uint64"
+      },
+      {
+        "internalType": "uint32",
+        "name": "delayMinutes",
+        "type": "uint32"
+      },
+      {
+        "internalType": "uint8",
+        "name": "agreeingSources",
+        "type": "uint8"
+      },
+      {
+        "internalType": "bytes32",
+        "name": "evidenceHash",
+        "type": "bytes32"
+      },
+      {
+        "internalType": "bool",
+        "name": "exists",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes32",
+        "name": "flightKey",
+        "type": "bytes32"
+      },
+      {
+        "internalType": "uint64",
+        "name": "scheduledArrival",
+        "type": "uint64"
+      },
+      {
+        "internalType": "uint64",
+        "name": "actualArrival",
+        "type": "uint64"
+      },
+      {
+        "internalType": "uint8",
+        "name": "agreeingSources",
+        "type": "uint8"
+      },
+      {
+        "internalType": "bytes32",
+        "name": "evidenceHash",
+        "type": "bytes32"
+      }
+    ],
+    "name": "verifyArrival",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  }
+]

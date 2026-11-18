@@ -1,13 +1,34 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;450;500;550;600;650;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+:root {
+  color-scheme: dark;
+  --bg: #080c15;
+  --surface: #0e1420;
+  --surface-raised: #111a29;
+  --line: rgba(159, 180, 210, .105);
+  --line-strong: rgba(159, 180, 210, .16);
+  --text: #edf2f8;
+  --muted: #8d98aa;
+  --muted-2: #687589;
+  --cyan: #61d7dc;
+  --violet: #a38af7;
+  --green: #64d5a5;
+  --amber: #eabb74;
+  font-family: 'DM Sans', 'Segoe UI', sans-serif;
+  font-optical-sizing: auto;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: var(--bg);
+  color: var(--text);
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-}
+* { box-sizing: border-box; }
+html { min-width: 360px; scroll-behavior: smooth; background: var(--bg); }
+body { margin: 0; min-width: 360px; min-height: 100vh; }
+button, input, select { font: inherit; }
+button { color: inherit; }
+button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible { outline: 2px solid rgba(98, 216, 222, .8); outline-offset: 3px; }
+button:disabled { opacity: .48; cursor: not-allowed !important; }
+::selection { color: #071016; background: #73e5e6; }
